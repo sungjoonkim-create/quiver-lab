@@ -87,13 +87,27 @@
 .dc-actions>span{flex:1 1 170px;min-width:0}
 .dc-actions>.row{margin-left:auto}
 @media(max-width:600px){.dc-actions>.row{flex-wrap:wrap;justify-content:flex-end}.dc-actions>.row button{white-space:normal}}
+.rr-neighbor-table{width:100%;table-layout:fixed}.rr-neighbor-table th:first-child{width:32px}.rr-neighbor-table td{overflow-wrap:anywhere}.rr-neighbor-table small{font-size:10px;line-height:1.6}
+
+/* Prominent companion application link: two lines, no literal // separator. */
+.companion-link{display:inline-flex;align-items:center;justify-content:space-between;gap:13px;flex:0 0 auto;min-width:210px;text-decoration:none;color:#fff;background:#1e5166;border:1px solid #184558;border-radius:10px;padding:9px 13px;box-shadow:0 2px 8px #1e516629;transition:background .15s,box-shadow .15s,transform .15s}
+.companion-link:hover{background:#123e54;box-shadow:0 4px 14px #1e51663b;transform:translateY(-1px)}
+.companion-link:focus-visible{outline:3px solid #63b6bf;outline-offset:3px}
+.companion-link .companion-text{display:flex;flex-direction:column;align-items:flex-start;min-width:0;gap:2px}
+.companion-link .companion-title{font-size:13px;line-height:1.25;font-weight:750;letter-spacing:.01em;white-space:nowrap}
+.companion-link .companion-credit{font-size:10px;line-height:1.3;color:#d6edf2;font-weight:500;white-space:nowrap}
+.companion-link .companion-external{flex-shrink:0;opacity:.9}
+@media(max-width:1100px){.companion-link{min-width:195px;padding:8px 10px}.companion-link .companion-title{font-size:12px}}
+@media(max-width:760px){.apphead{height:auto;min-height:57px;flex-wrap:wrap;padding:9px 12px;column-gap:10px;row-gap:8px}.companion-link{order:3;flex:1 0 100%;justify-content:center;min-width:0;padding:8px 12px}.companion-link .companion-text{align-items:center}.companion-link .companion-title{font-size:13px}.headright{margin-left:auto}.headright #loadBtn{display:none}}
+@media(max-width:440px){.headright #saveBtn{display:none}}
 </style>
 </head>
 <body>
 <div id="app">
 <header class="apphead">
 <svg class="brandmark" viewBox="0 0 36 36" aria-hidden="true"><path d="M10 24L18 9 28 25" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M10 24H28" stroke="currentColor" stroke-width="1.8"/><circle cx="9" cy="25" r="4" fill="white" stroke="currentColor" stroke-width="1.8"/><circle cx="18" cy="8" r="4" fill="white" stroke="currentColor" stroke-width="1.8"/><rect x="24" y="21" width="8" height="8" rx="1.5" fill="white" stroke="currentColor" stroke-width="1.8"/></svg>
-<div class="brand"><h1>Quiver Lab</h1><div class="caption">3D N=2 · DUALITIES</div></div><span class="headsep"></span><input id="projectTitle" class="titleinput" value="Untitled quiver" aria-label="Quiver title" maxlength="120"><span class="chip headtag">PROTOTYPE 0.9.5 · EN</span>
+<div class="brand"><h1>Quiver Lab</h1><div class="caption">3D N=2 · DUALITIES</div></div><span class="headsep"></span><input id="projectTitle" class="titleinput" value="Untitled quiver" aria-label="Quiver title" maxlength="120"><span class="chip headtag">PROTOTYPE 0.10.0 · EN</span>
+<a class="companion-link" href="https://quiverlab.org/" target="_blank" rel="noopener noreferrer" title="Open 3d N=4 Quiver Lab by Zhenghao Zhong (external website)" aria-label="3d N=4 Quiver Lab, by Zhenghao Zhong — opens in a new tab"><span class="companion-text"><span class="companion-title">3d N=4 Quiver Lab</span><span class="companion-credit">(by Zhenghao Zhong)</span></span><svg class="companion-external" aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3h7v7M10 14 21 3"/><path d="M21 13v8H3V3h8"/></svg></a>
 <div class="headright"><button id="newBtn" class="quiet optional">New canvas</button><button id="loadBtn">Open</button><button id="saveBtn">Save JSON</button><button id="svgBtn" class="optional">SVG</button><button id="helpBtn" class="square" title="Help and physical scope">?</button></div>
 </header>
 <nav class="toolbar" aria-label="Quiver editing tools">
@@ -108,13 +122,13 @@
 <button class="tool mutate" data-mode="bbp" title="BBP: requires verified R[V+] = 2 (P)"><svg viewBox="0 0 20 20"><path d="M3 6h13l-3-3M17 14H4l3 3M16 6l-3 3M4 14l3-3"/></svg>BBP<span class="key">P</span></button>
 <button class="tool" data-mode="deconfine" title="Replace an adjoint loop with a linear tail (D)"><svg viewBox="0 0 20 20"><circle cx="15" cy="10" r="3"/><circle cx="3" cy="10" r="2"/><circle cx="9" cy="10" r="2"/><path d="M5 10h2M11 10h1M14 6C10 0 21 0 18 7"/></svg>Deconfine<span class="key">D</span></button>
 <button class="tool" data-mode="confine" title="Restore an adjoint from a linear tail (C)"><svg viewBox="0 0 20 20"><circle cx="14" cy="11" r="3"/><path d="M3 11h6M6 8l3 3-3 3M12 7C6 0 20 0 18 8"/></svg>Confine<span class="key">C</span></button>
-<button class="tool" data-mode="rank-reducing" id="rankReducingBtn" title="Remove an adjoint leaf node and update FI / singlets (R)"><svg viewBox="0 0 20 20"><circle cx="4" cy="10" r="3"/><circle cx="16" cy="10" r="3"/><path d="M8 10h4M10 8l2 2-2 2M2 8l4 4M6 8l-4 4"/></svg>Rank-reducing<span class="key">R</span></button>
+<button class="tool" data-mode="rank-reducing" id="rankReducingBtn" title="Remove an adjoint node and update all neighboring FI-parameters (R)"><svg viewBox="0 0 20 20"><circle cx="4" cy="10" r="3"/><circle cx="16" cy="10" r="3"/><path d="M8 10h4M10 8l2 2-2 2M2 8l4 4M6 8l-4 4"/></svg>Rank-reducing<span class="key">R</span></button>
 <button class="tool" id="aDeconfBtn" title="A-deconfine the selected adjoint into U(N)↔U(N)"><svg viewBox="0 0 20 20"><circle cx="5" cy="10" r="2.3"/><circle cx="15" cy="10" r="2.8"/><path d="M7.5 7.5c3-6 11-4 8 3M7 10h6M13 7l2 3-2 3"/></svg>A-dec</button>
 <button class="tool" id="bDeconfBtn" title="B-deconfine the selected adjoint using the inverse BBP rule"><svg viewBox="0 0 20 20"><circle cx="5" cy="10" r="2.1"/><circle cx="15" cy="10" r="2.8"/><path d="M7 10h6M12 7l3 3-3 3M6 6C2 1 12 0 10 7"/></svg>B-dec</button>
 <button class="tool" id="adjSqcdBtn" title="Generate adjoint SQCD from p, F, N, β"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="3"/><rect x="1.5" y="7.5" width="4" height="5" rx="1"/><rect x="14.5" y="7.5" width="4" height="5" rx="1"/><path d="M5.5 10h1.5M13 10h1.5M7 6C4 0 16 0 13 6"/></svg>Adj SQCD</button>
 <button class="tool" id="cancelBtn" title="Cancel R-sum=2 pairs and R=1 self-loops / singlets under the specified rules">R cancel</button>
 <span class="divider"></span><button class="tool" id="undoBtn" title="Theory Undo (⌘/Ctrl+Z)">↶ Undo</button><button class="tool" id="redoBtn" title="Theory Redo (⌘/Ctrl+Shift+Z)">↷</button>
-<div class="grow"></div><select id="exampleSelect" aria-label="Examples" style="width:115px;padding:7px 8px;font-size:12px;background:white"><option value="">Examples</option><option value="sqcd">1 · SQCD</option><option value="chain">2 · FI shifts</option><option value="loops">3 · Loops / cancellation</option><option value="bbp">4 · BBP / F pair</option><option value="bbp-fi">5 · BBP / FI</option><option value="singlets">6 · Singlet cancellation</option><option value="deconfine">7 · Deconfine / N=8</option><option value="deconfine-symbolic">8 · Deconfine / symbolic</option><option value="confine">9 · Confine / N=8</option><option value="confine-symbolic">10 · Confine / symbolic</option><option value="a-deconfine">11 · A-deconfine</option><option value="b-deconfine">12 · B-deconfine</option><option value="short-tail">13 · N&lt;p / full U(0) tail</option><option value="negative-tail">14 · FI − / Confine</option><option value="empty-tail">15 · N=1 / U(0) tail</option><option value="rank-reducing">16 · Rank-reducing</option><option value="rank-reducing-symbolic">17 · Rank-reducing / symbolic</option><option value="rank-reducing-negative">18 · Rank-reducing / FI −</option><option value="adj-sqcd-dual">19 · Adj SQCD / dual</option></select>
+<div class="grow"></div><select id="exampleSelect" aria-label="Examples" style="width:115px;padding:7px 8px;font-size:12px;background:white"><option value="">Examples</option><option value="sqcd">1 · SQCD</option><option value="chain">2 · FI shifts</option><option value="loops">3 · Loops / cancellation</option><option value="bbp">4 · BBP / F pair</option><option value="bbp-fi">5 · BBP / FI</option><option value="singlets">6 · Singlet cancellation</option><option value="deconfine">7 · Deconfine / N=8</option><option value="deconfine-symbolic">8 · Deconfine / symbolic</option><option value="confine">9 · Confine / N=8</option><option value="confine-symbolic">10 · Confine / symbolic</option><option value="a-deconfine">11 · A-deconfine</option><option value="b-deconfine">12 · B-deconfine</option><option value="short-tail">13 · N&lt;p / full U(0) tail</option><option value="negative-tail">14 · FI − / Confine</option><option value="empty-tail">15 · N=1 / U(0) tail</option><option value="rank-reducing">16 · Rank-reducing</option><option value="rank-reducing-symbolic">17 · Rank-reducing / symbolic</option><option value="rank-reducing-negative">18 · Rank-reducing / FI −</option><option value="adj-sqcd-dual">19 · Adj SQCD / dual</option><option value="rank-reducing-multi">20 · Rank-reducing / neighbors +</option><option value="rank-reducing-multi-negative">21 · Rank-reducing / neighbors −</option><option value="rank-reducing-multi-symbolic">22 · Rank-reducing / neighbors symbolic</option></select>
 </nav>
 <main class="workspace">
 <section id="canvasWrap" class="canvas-wrap" data-mode="select" aria-label="Quiver canvas">
@@ -140,7 +154,7 @@
  */
 (function(root){
 'use strict';
-const VERSION='0.9.5';
+const VERSION='0.10.0';
 const MAX_TERMS=512;
 function gcd(a,b){a=a<0n?-a:a; b=b<0n?-b:b;while(b){let t=a%b;a=b;b=t;}return a||1n;}
 class Rat{
@@ -728,20 +742,21 @@ function confine(s,nodeId,options={}){
 }
 
 
-// Rank-reducing is a user-defined rewrite of a closed one-adjoint leaf.
-// Previews are read-only; rewrites use a draft so no partial deletion can leak.
-function rankReducingPreview(s,nodeId){
+// Rank-reducing removes one adjoint node joined to one or more gauge neighbors.
+// One equal-R bifundamental pair per neighbor is required. These are the
+// specified partition-function graph rules, not a full-superpotential solver.
+function rankReducingPreview(s,nodeId,options={}){
  const a=new Algebra(s.constraints),errors=[],warnings=[];
  checkResidueAssumptions(s,a);
- const p={ok:false,nodeId,errors,warnings,N:null,condition:false,fiSign:null,fiSigns:[],rawSingletCharges:[],singletCharges:[],incidentEdgeIds:[]};
+ const p={ok:false,nodeId,errors,warnings,N:null,condition:false,fiSign:null,fiSigns:[],needsFiSign:false,allShiftsZero:false,neighbors:[],rawSingletCharges:[],singletCharges:[],incidentEdgeIds:[]};
  const n=s.nodes.find(x=>x.id===nodeId);
- if(!n||n.type!=='gauge'){errors.push("Select the U(N) gauge node to remove.");return p;}
+ if(!n||n.type!=='gauge'){errors.push('Select the U(N) gauge node to remove.');return p;}
  p.oldRank=a.simp(n.rank);p.oldFI=a.simp(n.fi);
- if(!a.equal(n.cs,'0'))errors.push("The selected node must have CS level 0.");
+ if(!a.equal(n.cs,'0'))errors.push('The selected node must have CS level 0.');
  const N=a.reduce(n.rank).constantValue();
- if(!N)errors.push("N determines the number of singlets and must be a definite positive integer. Use a numerical rank or a constraint such as N=3.");
- else if(N.d!==1n||N.n<=0n)errors.push("The gauge rank N to be removed must be a positive integer.");
- else if(N.n>1200n)errors.push("Generating 2N singlets requires N ≤ 1200 (singlet limit: 2400).");
+ if(!N)errors.push('N determines the number of singlets and must be a definite positive integer. Use a numerical rank or a constraint such as N=3.');
+ else if(N.d!==1n||N.n<=0n)errors.push('The gauge rank N to be removed must be a positive integer.');
+ else if(N.n>1200n)errors.push('Generating 2N singlets requires N ≤ 1200 (singlet limit: 2400).');
  else {p.N=Number(N.n);p.jMin=1-p.N;p.jMax=p.N;p.singletCount=2*p.N;}
  const incident=s.edges.filter(e=>e.source===nodeId||e.target===nodeId);
  const loops=incident.filter(e=>e.source===e.target),links=incident.filter(e=>e.source!==e.target);
@@ -751,76 +766,89 @@ function rankReducingPreview(s,nodeId){
   p.loopId=loops[0].id;p.rawLoopR=parse(loops[0].r).toString();p.loopR=a.simp(p.rawLoopR);
   p.d=a.simp(parse(p.rawLoopR).scale(new Rat(1n,2n)));
  }
- const neighbors=[...new Set(links.map(e=>e.source===nodeId?e.target:e.source))];
- if(neighbors.length!==1)errors.push("The selected node must connect to exactly one U(M). Additional gauge or flavor connections are not allowed.");
- if(links.length!==2||links.filter(e=>e.target===nodeId).length!==1||links.filter(e=>e.source===nodeId).length!==1)
-  errors.push("The connection must be a bifundamental pair consisting of one incoming and one outgoing arrow.");
- if(neighbors.length===1){
-  const m=s.nodes.find(x=>x.id===neighbors[0]);
-  if(!m||m.type!=='gauge')errors.push("The neighbor must be a U(M) gauge node with an FI parameter, not a flavor node.");
-  else {
-   p.neighborId=m.id;p.neighborName=m.name;p.neighborRank=a.simp(m.rank);p.oldNeighborFI=a.simp(m.fi);
-   if(!a.equal(m.cs,'0'))errors.push("The neighboring U(M) must have CS level 0.");
-   const M=a.reduce(m.rank).constantValue();
-   if(M&&(M.d!==1n||M.n<=0n))errors.push("Neighbor rank M must be a positive integer.");
-   if(!M)warnings.push(`Assumption: neighbor rank (${p.neighborRank}) is a positive integer.`);
-   if(links.length===2){
-    p.rawBifundR=parse(links[0].r).toString();p.bifundR=a.simp(p.rawBifundR);
-    if(!a.equal(links[0].r,links[1].r))errors.push("The two bifundamental R-charges must be equal.");
-    const delta=Poly.constant(1).sub(parse(p.rawBifundR)),baseFI=parse(m.rank).mul(delta);
-    p.positiveRequiredFI=a.simp(baseFI);p.negativeRequiredFI=a.simp(baseFI.neg());
-    // Identify the branch by exact equality, NOT the numeric sign of t.
-    // In particular r>1 reverses the sign of M(1-r) but not the branch label.
-    p.fiSigns=[1,-1].filter(sign=>a.equal(n.fi,baseFI.scale(sign)));
-    p.condition=p.fiSigns.length>0;
-    if(!p.condition)errors.push(`t = ±M(1−r) not verified: current t = ${p.oldFI}, + branch = ${p.positiveRequiredFI}, − branch = ${p.negativeRequiredFI}. Edit the FI parameter or specify a constraint.`);
-    else if(p.fiSigns.length===2&&!a.equal(delta,'0')){
-     errors.push("Both FI sign conditions hold, but equality of the neighboring FI shifts could not be verified. With positive integer M assumed, use an additional constraint such as r=1 to fix the shift.");
-    }else{
-     p.fiSign=p.fiSigns[0];
-     // N is the rank of the DELETED node, not the surviving neighbor M.
-     // Keep the original rank expression so constraints reduce the full shift.
-     const shift=parse(n.rank).mul(delta).scale(p.fiSign);
-     p.requiredFI=a.simp(baseFI.scale(p.fiSign));p.fiShift=a.simp(shift);
-     p.rawNewFI=parse(m.fi).add(shift).toString();p.newFI=a.simp(p.rawNewFI);
-    }
+ const groups=new Map(),by=new Map(s.nodes.map(x=>[x.id,x]));
+ for(const e of links){const id=e.source===nodeId?e.target:e.source;if(!groups.has(id))groups.set(id,[]);groups.get(id).push(e);}
+ if(!groups.size)errors.push('At least one neighboring U(F_i) gauge node with a bifundamental pair is required.');
+ let complete=groups.size>0,sum=Poly.constant(0);
+ for(const [id,es] of groups){
+  const m=by.get(id),index=p.neighbors.length+1;
+  if(!m||m.type!=='gauge'){
+   errors.push('Every neighbor of the selected node must be a U(F_i) gauge node with an FI-parameter, not a flavor node.');complete=false;continue;
+  }
+  const v={index,id:m.id,name:m.name,rank:a.simp(m.rank),rawRank:parse(m.rank).toString(),oldFI:a.simp(m.fi),edgeIds:es.map(e=>e.id)};
+  p.neighbors.push(v);
+  if(!a.equal(m.cs,'0'))errors.push(`Neighbor ${index}: CS level must be 0.`);
+  const F=a.reduce(m.rank).constantValue();
+  if(F&&(F.d!==1n||F.n<=0n))errors.push(`Neighbor ${index}: rank F_i must be a positive integer.`);
+  if(!F)warnings.push(`Assumption: neighbor ${index} rank (${v.rank}) is a positive integer.`);
+  if(es.length!==2||es.filter(e=>e.target===nodeId).length!==1||es.filter(e=>e.source===nodeId).length!==1){
+   errors.push(`Neighbor ${index}: exactly one incoming and one outgoing bifundamental arrow are required. Multiple pairs to the same neighbor are not supported.`);complete=false;continue;
+  }
+  v.rawBifundR=parse(es[0].r).toString();v.bifundR=a.simp(v.rawBifundR);
+  if(!a.equal(es[0].r,es[1].r)){errors.push(`Neighbor ${index}: the two bifundamental R-charges must be equal.`);complete=false;continue;}
+  const delta=Poly.constant(1).sub(parse(v.rawBifundR)),term=parse(m.rank).mul(delta);
+  v.contribution=a.simp(term);v.rawPositiveShift=parse(n.rank).mul(delta).toString();v.positiveShift=a.simp(v.rawPositiveShift);
+  sum=sum.add(term);
+ }
+ p.neighborCount=p.neighbors.length;
+ if(complete){
+  p.rawSum=sum.toString();p.sum=a.simp(sum);p.positiveRequiredFI=p.sum;p.negativeRequiredFI=a.simp(sum.neg());
+  // The branch is an algebraic equality, never the numeric sign of t or S.
+  p.fiSigns=[1,-1].filter(sign=>a.equal(n.fi,sum.scale(sign)));
+  p.condition=p.fiSigns.length>0;
+  p.allShiftsZero=p.neighbors.every(v=>a.equal(v.rawPositiveShift,'0'));
+  const rawChoice=options.fiSign;
+  const chosen=rawChoice===1||rawChoice==='1'?1:rawChoice===-1||rawChoice==='-1'?-1:null;
+  const hasChoice=rawChoice!==undefined&&rawChoice!==null&&rawChoice!=='';
+  if(!p.condition)errors.push(`t = ±Σ_i F_i(1−r_i) not verified: current t = ${p.oldFI}, + branch = ${p.positiveRequiredFI}, − branch = ${p.negativeRequiredFI}. Edit the FI-parameter or specify a constraint.`);
+  if(hasChoice&&chosen===null)errors.push('The FI branch must be +1 or −1.');
+  else if(hasChoice&&!p.fiSigns.includes(chosen))errors.push('The requested FI branch does not satisfy the current condition.');
+  else if(chosen!==null)p.fiSign=chosen;
+  else if(p.fiSigns.length===1)p.fiSign=p.fiSigns[0];
+  else if(p.fiSigns.length===2){
+   if(p.allShiftsZero)p.fiSign=1;
+   else {p.needsFiSign=true;errors.push('Both FI conditions hold because S=0, but the individual FI shifts are not all zero. Choose the + or − branch explicitly.');}
+  }
+  if(p.fiSign!==null){
+   p.requiredFI=a.simp(sum.scale(p.fiSign));
+   for(const v of p.neighbors){
+    const shift=parse(v.rawPositiveShift).scale(p.fiSign);
+    v.fiShift=a.simp(shift);v.rawNewFI=parse(by.get(v.id).fi).add(shift).toString();v.newFI=a.simp(v.rawNewFI);
    }
   }
  }
- if(p.N!==null&&(s.singlets||[]).length+2*p.N>2400)errors.push("The existing singlets plus 2N new singlets would exceed 2400. Simplify the list first.");
- // j=0 is a genuine +{0} term, not an absent contribution. Preserve all
- // multiplicities; only cancelSinglets may remove R=1 or complementary pairs.
+ // Single-neighbor aliases preserve the earlier engine API without treating
+ // an arbitrary first neighbor as a summary of the multi-neighbor case.
+ if(p.neighbors.length===1){const v=p.neighbors[0];Object.assign(p,{neighborId:v.id,neighborName:v.name,neighborRank:v.rank,oldNeighborFI:v.oldFI,rawBifundR:v.rawBifundR,bifundR:v.bifundR,fiShift:v.fiShift,rawNewFI:v.rawNewFI,newFI:v.newFI});}
+ if(p.N!==null&&(s.singlets||[]).length+2*p.N>2400)errors.push('The existing singlets plus 2N new singlets would exceed 2400. Simplify the list first.');
+ // The spectrum is generated ONCE per removed node, not once per neighbor.
  if(p.N!==null&&p.rawLoopR!==undefined){
-  for(let j=p.jMin;j<=p.jMax;j++){
-   const charge=parse(p.rawLoopR).scale(j).toString();
-   p.rawSingletCharges.push(charge);p.singletCharges.push(a.simp(charge));
-  }
+  for(let j=p.jMin;j<=p.jMax;j++){const charge=parse(p.rawLoopR).scale(j).toString();p.rawSingletCharges.push(charge);p.singletCharges.push(a.simp(charge));}
  }
  p.ok=errors.length===0;return p;
 }
-function rankReducing(s,nodeId){
- const p=rankReducingPreview(s,nodeId);if(!p.ok)throw Error(p.errors.join('\n'));
+function rankReducing(s,nodeId,options={}){
+ const p=rankReducingPreview(s,nodeId,options);if(!p.ok)throw Error(p.errors.join('\n'));
  const draft=clone(s),a=new Algebra(draft.constraints);
- const removedNode=clone(draft.nodes.find(n=>n.id===nodeId)),neighbor=draft.nodes.find(n=>n.id===p.neighborId);
+ const removedNode=clone(draft.nodes.find(n=>n.id===nodeId));
  const removedEdges=draft.edges.filter(e=>e.source===nodeId||e.target===nodeId).map(clone);
  const removedEmptyTails=(draft.emptyTails||[]).filter(h=>h.nodeId===nodeId).map(clone);
+ // All shifts were computed from the same pre-transformation state.
+ for(const v of p.neighbors)draft.nodes.find(n=>n.id===v.id).fi=v.rawNewFI;
  draft.nodes=draft.nodes.filter(n=>n.id!==nodeId);
  draft.edges=draft.edges.filter(e=>e.source!==nodeId&&e.target!==nodeId);
  if(draft.emptyTails)draft.emptyTails=draft.emptyTails.filter(h=>h.nodeId!==nodeId);
- neighbor.fi=p.rawNewFI;
  const number=(draft.steps.at(-1)?.number||0)+1;
  const singletsAdded=addSinglets(draft,p.rawSingletCharges,{duality:'rank-reducing',step:number,nodeId});
  const singletsCanceled=cancelSinglets(draft,a).removed;
- // Do NOT create mesons or alter/simplify the surviving node's matter.
+ const neighbors=p.neighbors.map(v=>({id:v.id,name:v.name,rank:v.rank,rawRank:v.rawRank,bifundR:v.bifundR,rawBifundR:v.rawBifundR,contribution:v.contribution,oldFI:v.oldFI,newFI:v.newFI,fiShift:v.fiShift,edgeIds:[...v.edgeIds]}));
+ const reduction={N:p.N,jMin:p.jMin,jMax:p.jMax,neighbors,oldTargetFI:p.oldFI,requiredFI:p.requiredFI,sum:p.sum,fiSign:p.fiSign,fiSigns:[...p.fiSigns],allShiftsZero:p.allShiftsZero,loopR:p.loopR,rawLoopR:p.rawLoopR,d:p.d,removedNode,removedEdges,removedEmptyTails};
+ if(neighbors.length===1){const v=neighbors[0];Object.assign(reduction,{neighborId:v.id,neighborRank:v.rank,bifundR:v.bifundR,fiShift:v.fiShift});}
  const step={number,duality:'rank-reducing',nodeId,nodeName:removedNode.name,oldRank:p.oldRank,newRank:'0',nodeRemoved:true,
-  fiChanges:[{id:neighbor.id,name:neighbor.name,before:p.oldNeighborFI,after:p.newFI,removed:false}],
-  mesons:[],duals:[],cubicTerms:[],monopoleTerm:'',canceled:[],ambiguous:0,warnings:p.warnings,singletsAdded,singletsCanceled,
-  rankReduction:{N:p.N,jMin:p.jMin,jMax:p.jMax,neighborId:neighbor.id,neighborRank:p.neighborRank,
-   oldTargetFI:p.oldFI,requiredFI:p.requiredFI,fiSign:p.fiSign,fiSigns:[...p.fiSigns],loopR:p.loopR,rawLoopR:p.rawLoopR,d:p.d,bifundR:p.bifundR,fiShift:p.fiShift,
-   removedNode,removedEdges,removedEmptyTails}};
+  fiChanges:neighbors.map(v=>({id:v.id,name:v.name,before:v.oldFI,after:v.newFI,removed:false})),
+  mesons:[],duals:[],cubicTerms:[],monopoleTerm:'',canceled:[],ambiguous:0,warnings:p.warnings,singletsAdded,singletsCanceled,rankReduction:reduction};
  draft.steps.push(step);if(draft.steps.length>80)draft.steps.shift();
- checkResidueAssumptions(draft,a);
- Object.assign(s,draft);return step;
+ checkResidueAssumptions(draft,a);Object.assign(s,draft);return step;
 }
 
 
@@ -867,7 +895,7 @@ function createAdjointSQCD(input){
 
 function validate(input){
  if(!input||typeof input!=='object'||input.schema!=='quiver-lab')throw Error("Not a Quiver Lab JSON file.");
- if(!['0.1.0','0.1.1','0.1.2','0.1.3','0.1.4','0.2.0','0.3.0','0.4.0','0.5.0','0.6.0','0.7.0','0.8.0','0.8.1','0.8.2','0.9.0','0.9.1','0.9.2','0.9.3','0.9.4',VERSION].includes(input.version))throw Error(`Supported JSON version: ${VERSION}. Received version: ${input.version||"none"}`);
+ if(!['0.1.0','0.1.1','0.1.2','0.1.3','0.1.4','0.2.0','0.3.0','0.4.0','0.5.0','0.6.0','0.7.0','0.8.0','0.8.1','0.8.2','0.9.0','0.9.1','0.9.2','0.9.3','0.9.4','0.9.5',VERSION].includes(input.version))throw Error(`Supported JSON version: ${VERSION}. Received version: ${input.version||"none"}`);
  if(!Array.isArray(input.nodes)||input.nodes.length>160||!Array.isArray(input.edges)||input.edges.length>1200)throw Error("Invalid graph size.");
  let text=(v,max=1500)=>{if(typeof v!=='string'||v.length>max)throw Error("Check the string type and length.");return v;};
  let numeric=(v,fallback=0)=>{if(v===undefined)return fallback;if(typeof v!=='number'||!Number.isFinite(v)||Math.abs(v)>1e7)throw Error("Invalid coordinate or number format.");return v;};
@@ -900,7 +928,7 @@ function validate(input){
  }
  if(Array.isArray(input.log)){s.log=input.log.slice(-120).filter(x=>x&&typeof x.title==='string'&&Array.isArray(x.details)).map(x=>({title:x.title.slice(0,300),kind:String(x.kind||'edit').slice(0,20),time:String(x.time||''),details:x.details.map(z=>String(z).slice(0,4000)).slice(0,100)}));}
  // Older files have no trustworthy historical ledger. Never invent entries.
- if(['0.2.0','0.3.0','0.4.0','0.5.0','0.6.0','0.7.0','0.8.0','0.8.1','0.8.2','0.9.0','0.9.1','0.9.2','0.9.3','0.9.4',VERSION].includes(input.version)&&!Array.isArray(input.singlets))throw Error("The JSON file has no singlet records.");
+ if(['0.2.0','0.3.0','0.4.0','0.5.0','0.6.0','0.7.0','0.8.0','0.8.1','0.8.2','0.9.0','0.9.1','0.9.2','0.9.3','0.9.4','0.9.5',VERSION].includes(input.version)&&!Array.isArray(input.singlets))throw Error("The JSON file has no singlet records.");
  if(input.singlets!==undefined){
   if(!Array.isArray(input.singlets)||input.singlets.length>2400)throw Error("Invalid singlet record size.");
   const seen=new Set();s.singlets=input.singlets.map(x=>{if(!x||typeof x.id!=='string'||!/^[A-Za-z][A-Za-z0-9_-]{0,60}$/.test(x.id)||seen.has(x.id))throw Error("Invalid or duplicate singlet ID.");seen.add(x.id);const out={id:x.id,r:parse(text(x.r)).toString()};if(['aharony','bbp','deconfine','confine','adeconfine','bdeconfine','rank-reducing'].includes(x.duality))out.duality=x.duality;if(Number.isSafeInteger(x.step)&&x.step>0)out.step=x.step;if(typeof x.nodeId==='string')out.nodeId=text(x.nodeId,61);return out;});
@@ -948,21 +976,38 @@ function validate(input){
   if(d.residueAssumption){const v=d.residueAssumption;if(v.p!==d.p||v.a!==d.a||typeof v.rank!=='string'||!s.residueAssumptions.some(x=>x.p===v.p&&x.a===v.a&&a.equal(x.rank,v.rank)))throw Error("The symbolic confinement residue assumption is missing or changed.");}
  }
 
- // Rank-reducing audit is descriptive: never authorize a rewrite from history.
+ // Rank-reducing audit is descriptive, including legacy one-neighbor records.
+ // Never reinterpret a past transformation using today's constraints.
  for(const st of s.steps)if(st.duality==='rank-reducing'){
   const d=st.rankReduction;
-  if(!d||!Number.isSafeInteger(d.N)||d.N<1||d.N>1200||d.jMin!==1-d.N||d.jMax!==d.N||typeof d.neighborId!=='string'||d.neighborId===st.nodeId)throw Error("Invalid rank-reducing rank or index-range record.");
-  if(!st.nodeRemoved||st.newRank!=='0'||!Array.isArray(st.singletsAdded)||st.singletsAdded.length!==2*d.N||!Array.isArray(st.singletsCanceled)||st.fiChanges.length!==1)throw Error("Invalid rank-reducing singlet or FI record.");
-  if(!d.removedNode||d.removedNode.id!==st.nodeId||!Array.isArray(d.removedEdges)||d.removedEdges.length!==3)throw Error("Invalid rank-reducing deletion record.");
+  if(!d||!Number.isSafeInteger(d.N)||d.N<1||d.N>1200||d.jMin!==1-d.N||d.jMax!==d.N)throw Error('Invalid rank-reducing rank or index-range record.');
+  if(d.neighbors!==undefined&&!Array.isArray(d.neighbors))throw Error('Invalid rank-reducing neighbor list.');
+  const ns=d.neighbors||[{id:d.neighborId,rank:d.neighborRank,bifundR:d.bifundR,fiShift:d.fiShift}];
+  if(!ns.length||ns.length>159)throw Error('Invalid rank-reducing neighbor count.');
+  const seen=new Set();
+  for(const v of ns){
+   if(!v||typeof v.id!=='string'||v.id===st.nodeId||seen.has(v.id))throw Error('Invalid or duplicate rank-reducing neighbor ID.');seen.add(v.id);
+   for(const k of ['rank','bifundR','fiShift'])parse(text(v[k]));
+   for(const k of ['rawRank','rawBifundR','contribution','oldFI','newFI'])if(v[k]!==undefined)parse(text(v[k]));
+  }
+  if(!st.nodeRemoved||st.newRank!=='0'||!Array.isArray(st.singletsAdded)||st.singletsAdded.length!==2*d.N||!Array.isArray(st.singletsCanceled)||st.fiChanges.length!==ns.length)throw Error('Invalid rank-reducing singlet or FI record.');
+  if(!d.removedNode||d.removedNode.id!==st.nodeId||!Array.isArray(d.removedEdges)||d.removedEdges.length!==1+2*ns.length)throw Error('Invalid rank-reducing deletion record.');
   const loops=d.removedEdges.filter(e=>e.source===st.nodeId&&e.target===st.nodeId);
-  const links=d.removedEdges.filter(e=>(e.source===st.nodeId&&e.target===d.neighborId)||(e.source===d.neighborId&&e.target===st.nodeId));
-  if(loops.length!==1||links.length!==2||links.filter(e=>e.source===st.nodeId).length!==1)throw Error("Invalid rank-reducing connection record.");
-  for(const k of ['neighborRank','oldTargetFI','requiredFI','loopR','rawLoopR','d','bifundR','fiShift'])parse(text(d[k]));
-  parse(text(st.fiChanges[0].before));parse(text(st.fiChanges[0].after));
-  if(d.fiSign!==undefined&&![1,-1].includes(d.fiSign))throw Error("Invalid rank-reducing FI sign record.");
-  if(d.fiSigns!==undefined&&(!Array.isArray(d.fiSigns)||!d.fiSigns.length||d.fiSigns.length>2||d.fiSigns.some(x=>![1,-1].includes(x))||new Set(d.fiSigns).size!==d.fiSigns.length||!d.fiSigns.includes(d.fiSign)))throw Error("Invalid rank-reducing FI branch record.");
-  if(st.fiChanges[0].id!==d.neighborId)throw Error("Invalid rank-reducing neighboring FI record.");
-  for(const [i,x] of st.singletsAdded.entries())if(!parse(x.r).sub(parse(d.rawLoopR).scale(d.jMin+i)).zero)throw Error("The rank-reducing singlet index range has changed.");
+  if(loops.length!==1)throw Error('Invalid rank-reducing adjoint record.');
+  const edgeIds=new Set();for(const e of d.removedEdges){if(typeof e.id!=='string'||edgeIds.has(e.id))throw Error('Invalid deleted-edge ID.');edgeIds.add(e.id);parse(text(e.r));}
+  for(const v of ns){
+   const es=d.removedEdges.filter(e=>(e.source===st.nodeId&&e.target===v.id)||(e.source===v.id&&e.target===st.nodeId));
+   if(es.length!==2||es.filter(e=>e.source===st.nodeId).length!==1)throw Error('Invalid rank-reducing connection record.');
+   const changes=st.fiChanges.filter(f=>f.id===v.id);
+   if(changes.length!==1)throw Error('Invalid rank-reducing neighboring FI record.');
+   parse(text(changes[0].before));parse(text(changes[0].after));
+  }
+  for(const k of ['oldTargetFI','requiredFI','loopR','rawLoopR','d'])parse(text(d[k]));
+  if(d.sum!==undefined)parse(text(d.sum));
+  if(d.allShiftsZero!==undefined&&typeof d.allShiftsZero!=='boolean')throw Error('Invalid rank-reducing branch-equivalence flag.');
+  if(d.fiSign!==undefined&&![1,-1].includes(d.fiSign))throw Error('Invalid rank-reducing FI sign record.');
+  if(d.fiSigns!==undefined&&(!Array.isArray(d.fiSigns)||!d.fiSigns.length||d.fiSigns.length>2||d.fiSigns.some(x=>![1,-1].includes(x))||new Set(d.fiSigns).size!==d.fiSigns.length||!d.fiSigns.includes(d.fiSign)))throw Error('Invalid rank-reducing FI branch record.');
+  for(const [i,x] of st.singletsAdded.entries())if(!parse(x.r).sub(parse(d.rawLoopR).scale(d.jMin+i)).zero)throw Error('The rank-reducing singlet index range has changed.');
  }
 
  // Check that all expressions stay parseable when constraints are substituted.
@@ -971,6 +1016,20 @@ function validate(input){
 }
 function example(type){let s=blank();
  if(type==='adj-sqcd-dual')return createAdjointSQCD({p:3,F:6,N:4,beta:2});
+ if(type==='rank-reducing-multi'||type==='rank-reducing-multi-negative'||type==='rank-reducing-multi-symbolic'){
+ const symbolic=type.endsWith('symbolic'),negative=type.endsWith('negative');
+ s.title=symbolic?'Rank-reducing · symbolic neighbors':negative?'Rank-reducing · two neighbors / FI −':'Rank-reducing · two neighbors / FI +';
+ const center=node(s,'gauge',0,0,{rank:symbolic?'N':'2',fi:symbolic?'t':negative?'-43/12':'43/12'});
+ const u=node(s,'gauge',-270,0,{rank:symbolic?'F1':'3',fi:'t1'}),v=node(s,'gauge',270,0,{rank:symbolic?'F2':'2',fi:'t2'});
+ edge(s,center.id,center.id,{r:symbolic?'2*d':'1/3'});
+ bifund(s,center.id,u.id,symbolic?'r1':'1/4');bifund(s,center.id,v.id,symbolic?'r2':'1/3');
+ edge(s,u.id,u.id,{r:'x'});edge(s,v.id,v.id,{r:'y'});
+ const left=node(s,'flavor',-480,-160,{rank:'H'}),right=node(s,'flavor',-480,160,{rank:'H'});
+ edge(s,left.id,u.id,{r:'q'});edge(s,u.id,right.id,{r:'q'});
+ if(symbolic)s.constraints='N=3; t=F1*(1-r1)+F2*(1-r2)';
+ s.notes=symbolic?'Remove the center U(N). N=3 is fixed by Constraints; F1,F2,r1,r2,d remain symbolic. The shifts are +3(1-r1) and +3(1-r2); generate six singlets only once.':'Remove the center U(2). S=3*(1-1/4)+2*(1-1/3)=43/12. The FI shifts are '+(negative?'−3/2 and −4/3':'+3/2 and +4/3')+'. Generate -1/3,0,1/3,2/3 once. Other loops and flavor connections are retained.';
+ return s;
+ }
  if(type==='sqcd'){
  s.title="SQCD · split flavor nodes";let l=node(s,'flavor',-260,0,{name:'L1',rank:'F1'}),g=node(s,'gauge',0,0,{name:'g1',rank:'N1',fi:'t1'}),r=node(s,'flavor',260,0,{name:'R1',rank:'F1'});edge(s,l.id,g.id,{name:'Q',r:'r'});edge(s,g.id,r.id,{name:'Qt',r:'s'});
  }else if(type==='chain'){
@@ -1021,14 +1080,14 @@ const api={VERSION,Rat,Poly,parse,Algebra,adjointSQCDParameters,dualSQCDSummary,
 if(typeof module!=='undefined'&&module.exports)module.exports=api;root.QuiverEngine=api;
 })(typeof globalThis!=='undefined'?globalThis:this);
 </script>
-<script>/* Quiver Lab 0.9.5 — dependency-free SVG editor. */
+<script>/* Quiver Lab 0.10.0 — dependency-free SVG editor. */
 (()=>{
 'use strict';
 const E=window.QuiverEngine,$=id=>document.getElementById(id),NS='http://www.w3.org/2000/svg';
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const pretty=s=>String(s).replace(/([A-Za-zα-ωΑ-Ω])_?(\d+(?:_\d+)*)/g,(_,a,b)=>a+b.split('_').map(part=>[...part].map(x=>'₀₁₂₃₄₅₆₇₈₉'[x]).join('')).join(',')).replace(/ - /g,' − ').replace(/^-/, '−');
 const svg=(tag,attrs={},text)=>{let e=document.createElementNS(NS,tag);for(let [k,v] of Object.entries(attrs))if(v!=null)e.setAttribute(k,v);if(text!==undefined)e.textContent=text;return e;};
-const STORAGE='quiver_lab_0_9_5_en',LEGACY_STORAGES=['quiver_lab_0_9_4','quiver_lab_0_9_3','quiver_lab_0_9_2','quiver_lab_0_9_1','quiver_lab_0_9_0','quiver_lab_0_8_2','quiver_lab_0_8_1','quiver_lab_0_8_0','quiver_lab_0_7_0','quiver_lab_0_6_0','quiver_lab_0_5_0','quiver_lab_0_4_0','quiver_lab_0_3_0','quiver_lab_0_2_0','quiver_lab_0_1_4','quiver_lab_0_1_3','quiver_lab_0_1_2','quiver_lab_0_1_1','quiver_lab_0_1_0'];let state=E.blank(),algebra,selection=null,mode='select',tab='inspect',pendingSource=null,gesture=null,lastPointer=null,undoStack=[],redoStack=[],layoutStack=[],saveTimer,toastTimer,storageOK=true,initialWarning='';
+const STORAGE='quiver_lab_0_10_0_en',LEGACY_STORAGES=['quiver_lab_0_9_5_en','quiver_lab_0_9_4','quiver_lab_0_9_3','quiver_lab_0_9_2','quiver_lab_0_9_1','quiver_lab_0_9_0','quiver_lab_0_8_2','quiver_lab_0_8_1','quiver_lab_0_8_0','quiver_lab_0_7_0','quiver_lab_0_6_0','quiver_lab_0_5_0','quiver_lab_0_4_0','quiver_lab_0_3_0','quiver_lab_0_2_0','quiver_lab_0_1_4','quiver_lab_0_1_3','quiver_lab_0_1_2','quiver_lab_0_1_1','quiver_lab_0_1_0'];let state=E.blank(),algebra,selection=null,mode='select',tab='inspect',pendingSource=null,gesture=null,lastPointer=null,undoStack=[],redoStack=[],layoutStack=[],saveTimer,toastTimer,storageOK=true,initialWarning='';
 try{let saved=[STORAGE,...LEGACY_STORAGES].map(key=>localStorage.getItem(key)).find(Boolean);if(saved)state=E.validate(JSON.parse(saved));}catch(e){if(e.name==='SecurityError'){storageOK=false;}else initialWarning="Could not restore the saved session. Please open your JSON file.";}
 algebra=new E.Algebra(state.constraints);
 let creation=null,creationFocus=null,mutationType='aharony',singletCollapsed=false,deconfinementDraft=null,confinementDraft=null,rankReducingDraft=null;
@@ -1195,33 +1254,38 @@ function renderEdge(e){
 
 // Confine has its own preview/selection. Opening and canceling are read-only.
 function rankReducingBranchLabel(p){
- if(p.fiSigns?.length===2&&p.fiSign!=null)return '± (shift = 0)';
- return p.fiSign===-1?'−':p.fiSign===1?'+':"unverified";
+ if(p.fiSigns?.length===2&&p.fiSign!=null&&p.allShiftsZero!==false)return '± (all shifts = 0)';
+ return p.fiSign===-1?'−':p.fiSign===1?'+':p.needsFiSign?'choose a branch':'unverified';
+}
+// Imported pre-0.10 records have a single neighbor instead of an array.
+function rankReducingAuditNeighbors(st){
+ const d=st.rankReduction;
+ return d.neighbors||[{id:d.neighborId,rank:d.neighborRank,bifundR:d.bifundR,fiShift:d.fiShift,oldFI:st.fiChanges[0].before,newFI:st.fiChanges[0].after}];
 }
 function rankReducingControls(n){
  if(!state.edges.some(e=>e.source===n.id&&e.target===n.id))return '';
  try{
   const p=E.rankReducingPreview(state,n.id);
-  return `<div class="section rr-controls"><div class="spread"><h3 style="margin:0">Rank-reducing</h3><span class="chip ${p.ok?'teal':'amber'}">${p.ok?'READY':'BLOCKED'}</span></div><p class="tiny subtle" style="margin:10px 0">t = ±M(1−r) · leaf node with one adjoint and one bifundamental pair</p><button type="button" id="openRankReducing" class="full">${p.ok?"Rank-reducing preview":"Check rank-reducing conditions"}</button></div>`;
+  return `<div class="section rr-controls"><div class="spread"><h3 style="margin:0">Rank-reducing</h3><span class="chip ${p.ok?'teal':'amber'}">${p.ok?'READY':p.needsFiSign?'CHOOSE ±':'BLOCKED'}</span></div><p class="tiny subtle" style="margin:10px 0">t = ±Σᵢ Fᵢ(1−rᵢ) · one adjoint, one pair per gauge neighbor</p><button type="button" id="openRankReducing" class="full">${p.ok||p.needsFiSign?'Rank-reducing preview':'Check rank-reducing conditions'}</button></div>`;
  }catch(e){return `<div class="section"><div class="note error">${escape(e.message)}</div></div>`;}
 }
 function openRankReducing(nodeId){
  const n=state.nodes.find(n=>n.id===nodeId);
- if(!n||n.type!=='gauge'){toast("Select the U(N) gauge node for Rank-reducing.",true);return;}
+ if(!n||n.type!=='gauge'){toast('Select the U(N) gauge node for Rank-reducing.',true);return;}
  if($('modalRoot').children.length)closeModal();
- rankReducingDraft={nodeId,focus:document.activeElement};
- $('modalRoot').innerHTML=`<div class="modal-overlay rr-overlay"><section class="modal deconfine-modal rr-modal" role="dialog" aria-modal="true" aria-labelledby="rrTitle"><div class="modalhead"><div><div class="dc-eyebrow">ADJOINT LEAF → SINGLETS</div><h2 id="rrTitle">Rank-reducing</h2></div><button id="rrClose" class="square" aria-label="Cancel Rank-reducing">×</button></div><form id="rrForm" class="dc-form" novalidate><div class="modalbody dc-scroll"><div id="rrPreview"></div><div id="rrError" class="create-error hidden" role="alert"></div></div><div class="dc-actions"><span class="tiny subtle">The graph is unchanged until you apply.<br>One Undo restores nodes, FI, and singlets.</span><div class="row"><button type="button" id="rrCancel">Cancel</button><button type="submit" class="primary" id="rrSubmit" disabled>Apply Rank-reducing</button></div></div></form></section></div>`;
+ rankReducingDraft={nodeId,focus:document.activeElement,fiSign:''};
+ $('modalRoot').innerHTML=`<div class="modal-overlay rr-overlay"><section class="modal deconfine-modal rr-modal" role="dialog" aria-modal="true" aria-labelledby="rrTitle"><div class="modalhead"><div><div class="dc-eyebrow">ADJOINT NODE → SINGLETS</div><h2 id="rrTitle">Rank-reducing</h2></div><button id="rrClose" class="square" aria-label="Cancel Rank-reducing">×</button></div><form id="rrForm" class="dc-form" novalidate><div class="modalbody dc-scroll"><div id="rrPreview"></div><div id="rrError" class="create-error hidden" role="alert"></div></div><div class="dc-actions"><span class="tiny subtle">The graph is unchanged until you apply.<br>One Undo restores nodes, all FI-parameters, and singlets.</span><div class="row"><button type="button" id="rrCancel">Cancel</button><button type="submit" class="primary" id="rrSubmit" disabled>Apply Rank-reducing</button></div></div></form></section></div>`;
  $('rrForm').onsubmit=ev=>{ev.preventDefault();submitRankReducing();};
  $('rrClose').onclick=closeModal;$('rrCancel').onclick=closeModal;
  $('modalRoot').querySelector('.rr-overlay').onclick=ev=>{if(ev.target.classList.contains('rr-overlay'))closeModal();};
  refreshRankReducingPreview();updateModeHint();
- (!$('rrSubmit').disabled?$('rrSubmit'):$('rrClose')).focus({preventScroll:true});
+ ($('rrSign')||(!$('rrSubmit').disabled?$('rrSubmit'):$('rrClose'))).focus({preventScroll:true});
 }
 function refreshRankReducingPreview(){
  if(!rankReducingDraft||!$('rrForm'))return;
  const button=$('rrSubmit'),err=$('rrError');button.disabled=true;err.classList.add('hidden');
  try{
-  const p=E.rankReducingPreview(state,rankReducingDraft.nodeId);rankReducingDraft.preview=p;
+  const p=E.rankReducingPreview(state,rankReducingDraft.nodeId,{fiSign:rankReducingDraft.fiSign});rankReducingDraft.preview=p;
   const errors=p.errors.map(t=>`<div class="note error" style="margin-top:10px">${escape(t)}</div>`).join('');
   let ledger='';
   if(p.ok){
@@ -1229,33 +1293,38 @@ function refreshRankReducingPreview(){
    const count=cs.reduce((n,c)=>n+(c.b?2:1),0);
    ledger=`<p id="rrLedgerResult" class="tiny subtle">Singlets after cancellation: ${draft.singlets.length} · canceled from existing/new entries: ${count}</p>`;
   }
-  $('rrPreview').innerHTML=`<div class="dc-source"><span>Remove U(${escape(pretty(p.oldRank))})</span><span>FI = ${escape(pretty(p.oldFI))}</span></div>
+  const pick=p.fiSigns.length===2&&!p.allShiftsZero?`<div class="field"><label for="rrSign">Both conditions hold: choose the common FI branch</label><select id="rrSign"><option value="">Select + or −</option><option value="1" ${p.fiSign===1?'selected':''}>+ : add N(1−rᵢ) to each tᵢ</option><option value="-1" ${p.fiSign===-1?'selected':''}>− : subtract N(1−rᵢ) from each tᵢ</option></select></div>`:'';
+  const rows=p.neighbors.map((v,i)=>`<tr class="dc-original rr-neighbor" data-rr-neighbor="${escape(v.id)}"><td>${i+1}</td><td class="expr">U(${escape(pretty(v.rank))})<br><small>rᵢ = ${v.bifundR!==undefined?escape(pretty(v.bifundR)):'—'}</small></td><td class="expr">${v.contribution!==undefined?escape(pretty(v.contribution)):'—'}</td><td class="expr">${escape(pretty(v.oldFI))}${v.newFI!==undefined?` → <strong ${i===0?'id="rrNewFI"':''} class="rr-new-fi">${escape(pretty(v.newFI))}</strong><br><small>Shift: <span ${i===0?'id="rrShift"':''} class="rr-fi-shift">${escape(pretty(v.fiShift))}</span></small>`:''}</td></tr>`).join('');
+  $('rrPreview').innerHTML=`<div class="dc-source"><span>Remove U(${escape(pretty(p.oldRank))})</span><span>FI = ${escape(pretty(p.oldFI))}</span><span>${p.neighbors.length} gauge neighbor${p.neighbors.length===1?'':'s'}</span></div>
    ${p.loopR!==undefined?`<div class="dc-rules"><div><span>Adjoint R = 2d</span><strong>${escape(pretty(p.loopR))}</strong></div><div><span>d</span><strong>${escape(pretty(p.d))}</strong></div></div>`:''}
-   ${p.bifundR!==undefined?`<div class="note ${p.fiSign!=null?'success':'amber'}" id="rrCondition"><strong>${p.fiSign!=null?'✓ t = '+(p.fiSign===-1?'−':'+')+"M(1−r) verified":"t = ±M(1−r) not verified"}</strong><div class="expr" style="margin-top:6px">FI branch: <strong id="rrBranch">${rankReducingBranchLabel(p)}</strong><br>t = ${escape(pretty(p.oldFI))}<br>+M(1−r) = ${escape(pretty(p.positiveRequiredFI))}<br>−M(1−r) = ${escape(pretty(p.negativeRequiredFI))}<br>Bi-fund R = ${escape(pretty(p.bifundR))}</div></div>`:''}
-   ${p.neighborId&&p.newFI!==undefined?`<div class="dc-table-wrap"><table class="dc-table"><thead><tr><th>Gauge node</th><th>FI change</th><th>Action</th></tr></thead><tbody><tr><td class="expr">U(${escape(pretty(p.oldRank))})</td><td class="expr">${escape(pretty(p.oldFI))}</td><td>Remove</td></tr><tr class="dc-original"><td class="expr">U(${escape(pretty(p.neighborRank))})</td><td class="expr">${escape(pretty(p.oldNeighborFI))} → <strong id="rrNewFI">${escape(pretty(p.newFI))}</strong></td><td>Keep</td></tr></tbody></table></div><p class="tiny subtle">Neighboring FI shift: ${p.fiSign===-1?'−N(1−r)':'+N(1−r)'} = <span class="expr" id="rrShift">${escape(pretty(p.fiShift))}</span>. The neighboring rank, position, and other connections are retained.</p>`:''}
-   ${p.singletCharges.length?`<div class="dc-singlets"><span class="tiny subtle">New singlets · R = 2dj · j = ${p.jMin},…,${p.jMax} · before cancellation: ${p.singletCount} terms</span><div id="rrCharges" class="rr-charges">${p.singletCharges.map((r,i)=>`<span class="rr-charge"><small>j=${p.jMin+i}</small><span class="expr">+{${escape(pretty(r))}}</span></span>`).join('')}</div>${ledger}<p class="tiny subtle">Includes +{0} at j=0. R=1 self-cancellation and R-sum=2 pair cancellation are applied to the full ledger.</p></div>`:''}
-   ${errors}${p.warnings.map(t=>`<div class="note amber" style="margin-top:9px">${escape(t)}</div>`).join('')}\n   <p class="tiny subtle" style="margin-top:12px">Only the selected node, its one adjoint, and its two bifundamental arrows are removed. No mesons are created. Singlets always cancel automatically; other arrows at the neighbor are not simplified.</p>`;
+   ${p.sum!==undefined?`<div class="note ${p.fiSign!=null?'success':'amber'}" id="rrCondition"><strong>${p.fiSign!=null?'✓ t = '+(p.fiSign===-1?'−':'+')+'Σᵢ Fᵢ(1−rᵢ) verified':p.condition?'Both t = ±S conditions verified':'t = ±Σᵢ Fᵢ(1−rᵢ) not verified'}</strong><div class="expr" style="margin-top:6px">FI branch: <strong id="rrBranch">${rankReducingBranchLabel(p)}</strong><br>t = ${escape(pretty(p.oldFI))}<br>S = Σᵢ Fᵢ(1−rᵢ) = ${escape(pretty(p.positiveRequiredFI))}<br>−S = ${escape(pretty(p.negativeRequiredFI))}</div></div>`:''}
+   ${pick}${rows?`<div class="dc-table-wrap"><table class="dc-table rr-neighbor-table"><thead><tr><th>i</th><th>Retained gauge / rᵢ</th><th>Fᵢ(1−rᵢ)</th><th>FI-parameter change</th></tr></thead><tbody>${rows}</tbody></table></div><p class="tiny subtle">Each tᵢ → tᵢ + σN(1−rᵢ), using the same σ and the removed rank N. All neighboring ranks, positions, loops, and other connections are retained.</p>`:''}
+   ${p.singletCharges.length?`<div class="dc-singlets"><span class="tiny subtle">New singlets · R = 2dj · j = ${p.jMin},…,${p.jMax} · before cancellation: ${p.singletCount} terms</span><div id="rrCharges" class="rr-charges">${p.singletCharges.map((r,i)=>`<span class="rr-charge"><small>j=${p.jMin+i}</small><span class="expr">+{${escape(pretty(r))}}</span></span>`).join('')}</div>${ledger}<p class="tiny subtle">Generated once, not per neighbor. Includes +{0} at j=0. R=1 and complementary pairs cancel against the full ledger.</p></div>`:''}
+   ${errors}${p.warnings.map(t=>`<div class="note amber" style="margin-top:9px">${escape(t)}</div>`).join('')}
+   <p class="tiny subtle" style="margin-top:12px">Only the selected node and its incident fields are removed. No mesons or new connections between neighbors are created. Singlets always cancel automatically; unrelated arrows are not simplified.</p>`;
+  if($('rrSign'))$('rrSign').onchange=()=>{rankReducingDraft.fiSign=$('rrSign').value;refreshRankReducingPreview();$('rrSign')?.focus({preventScroll:true});};
   button.disabled=!p.ok;
  }catch(e){$('rrPreview').replaceChildren();err.textContent=e.message;err.classList.remove('hidden');}
 }
 function submitRankReducing(){
  if(!rankReducingDraft)return;refreshRankReducingPreview();if($('rrSubmit').disabled)return;
- const {nodeId}=rankReducingDraft;
+ const {nodeId,fiSign}=rankReducingDraft;
  const result=commit('Rank-reducing',s=>{
-  const st=E.rankReducing(s,nodeId),d=st.rankReduction;
-  return {step:st,details:[`U(${st.oldRank}) removed · one adjoint and two bifundamental arrows removed`,
-   `FI branch: ${rankReducingBranchLabel(d)} · condition t = ${d.fiSign===-1?'−':'+'}M(1−r) = ${d.requiredFI}`,`Neighbor U(${d.neighborRank}) FI: ${st.fiChanges[0].before} → ${st.fiChanges[0].after}`,
-   `Singlet R=2dj, j=${d.jMin},…,${d.jMax} · ${st.singletsAdded.length} created`,
+  const st=E.rankReducing(s,nodeId,{fiSign}),d=st.rankReduction;
+  return {step:st,details:[`U(${st.oldRank}) removed · one adjoint and ${2*d.neighbors.length} bifundamental arrows removed`,
+   `FI branch: ${rankReducingBranchLabel(d)} · condition t = ${d.fiSign===-1?'−':'+'}Σ_i F_i(1-r_i) = ${d.requiredFI}`,
+   ...d.neighbors.map((v,i)=>`Neighbor ${i+1} U(${v.rank}), R=${v.bifundR}: FI ${v.oldFI} → ${v.newFI} (shift ${v.fiShift})`),
+   `Singlet R=2dj, j=${d.jMin},…,${d.jMax} · ${st.singletsAdded.length} created once`,
    ...st.singletsCanceled.map(singletCancelDetail),`Current singlets: ${s.singlets.length}`,...st.warnings]};
  },{kind:'rank-reducing',notify:false});
- if(result){closeModal();select('node',result.step.rankReduction.neighborId);toast(`Rank-reducing complete · U(${result.step.oldRank}) removed\nNeighboring FI updated · singlets: ${result.step.singletsAdded.length} created / remaining: ${state.singlets.length}`);}
+ if(result){closeModal();select('node',result.step.rankReduction.neighbors[0].id);toast(`Rank-reducing complete · U(${result.step.oldRank}) removed\n${result.step.fiChanges.length} neighboring FI-parameter(s) updated · singlets: ${result.step.singletsAdded.length} created / remaining: ${state.singlets.length}`);}
 }
 function rankReducingStepMarkup(st){
- const d=st.rankReduction;
- return `<div class="codeblock mono">U(${escape(st.oldRank)}) removed · U(${escape(d.neighborRank)}) retained<br>FI branch: ${rankReducingBranchLabel({...d,fiSign:d.fiSign??1})}<br>t = ${d.fiSign===-1?'−':'+'}M(1−r) = ${escape(d.requiredFI)}<br>Adjoint R = ${escape(d.loopR)}, d = ${escape(d.d)}<br>Bi-fund R = ${escape(d.bifundR)}<br>Neighboring FI: ${escape(st.fiChanges[0].before)} → ${escape(st.fiChanges[0].after)}<br>R=2dj, j=${d.jMin},…,${d.jMax}</div><div class="preview-singlets rr-audit">Singlets created: ${escape(singletText(st.singletsAdded))}${st.singletsCanceled.length?'<br>'+st.singletsCanceled.map(c=>escape(singletCancelDetail(c))).join('<br>'):''}</div><p class="tiny subtle">Specified rank-reducing graph rule. No mesons or full superpotential are generated.</p>`;
+ const d=st.rankReduction,ns=rankReducingAuditNeighbors(st);
+ return `<div class="codeblock mono">U(${escape(st.oldRank)}) removed · ${ns.length} neighbor(s) retained<br>FI branch: ${rankReducingBranchLabel({...d,fiSign:d.fiSign??1})}<br>t = ${d.fiSign===-1?'−':'+'}Σᵢ Fᵢ(1−rᵢ) = ${escape(d.requiredFI)}<br>Adjoint R = ${escape(d.loopR)}, d = ${escape(d.d)}<br>${ns.map((v,i)=>`Neighbor ${i+1}: U(${escape(v.rank)}), rᵢ=${escape(v.bifundR)}<br>FI: ${escape(st.fiChanges.find(f=>f.id===v.id)?.before)} → ${escape(st.fiChanges.find(f=>f.id===v.id)?.after)} (shift ${escape(v.fiShift)})`).join('<br>')}<br>R=2dj, j=${d.jMin},…,${d.jMax}</div><div class="preview-singlets rr-audit">Singlets created: ${escape(singletText(st.singletsAdded))}${st.singletsCanceled.length?'<br>'+st.singletsCanceled.map(c=>escape(singletCancelDetail(c))).join('<br>'):''}</div><p class="tiny subtle">Specified rank-reducing graph rule. No mesons or full superpotential are generated. Historical FI results are preserved on import.</p>`;
 }
 function rankReducingRulesMarkup(){
- return `<div class="section"><h3>Rank-reducing · R</h3><div class="codeblock mono">U(N)_t + adjoint R=2d<br>One bifundamental pair, R=r, to exactly one U(M)_s<br>Requires t = σ M(1−r), σ = ±1<br>Remove U(N), its adjoint, and the bifundamental pair<br>Neighboring FI: s → s+σN(1−r)<br>Singlets: +{2dj}, j=−N+1,…,N<br>Create 2N terms and cancel against the existing ledger</div><p class="tiny subtle" style="margin-top:10px">N must be a definite positive integer, either numerical or fixed by constraints. M, r, and d may be symbolic. Both gauge nodes must have CS=0, and the selected node must have no extra connections or loops. Other connections at U(M) are retained. The j=0 term is included as +{0}. The numerical rank and the 2400-singlet limit are checked; conditions are not assumed automatically.</p></div>`;
+ return `<div class="section"><h3>Rank-reducing · R</h3><div class="codeblock mono">U(N)_t + one adjoint R=2d<br>One common-R=rᵢ pair to each U(Fᵢ)_(tᵢ)<br>S = Σᵢ Fᵢ(1−rᵢ)<br>Requires t = σS, σ = ±1<br>Remove U(N) and its incident fields<br>Each tᵢ → tᵢ + σN(1−rᵢ)<br>Singlets: +{2dj}, j=−N+1,…,N<br>Create 2N terms ONCE and cancel against the ledger</div><p class="tiny subtle" style="margin-top:10px">N must be a definite positive integer (numerical or fixed by constraints). Neighbor ranks are positive integers; Fᵢ, rᵢ, d may be symbolic. All involved gauge nodes must have CS=0. No direct flavor links, additional adjoints, or multiple pairs to the same neighbor are allowed. Connections among neighbors and to external nodes are unchanged. No mesons are created. If S=t=0 but the individual shifts are not all zero, choose a common sign in the preview. The single-neighbor rule is included.</p></div>`;
 }
 
 function confineControls(n){
@@ -1664,8 +1733,7 @@ function showHelp(){$('modalRoot').innerHTML=`<div class="modal-overlay"><sectio
 <h3>Deconfine · D</h3><p>Select a gauge adjoint with R=2/(p+1), then choose Deconfine. Confirm p and a=N mod p, choose a direction, and apply. The operation creates p−1 tail nodes, including U(0) nodes, together with adjoints, bifundamental pairs, the FI shift, and singlets +{2j/(p+1)} for j=1,…,min(a,p−a). At a=0 there are no new singlets and all new FI parameters equal 2/(p+1). p=1 is handled by R=1 cancellation. The original node, its external connections, and other loops are retained.</p><p>For symbolic N, enter a explicitly. This assumption is stored in Rules and JSON; later numerical constraints that contradict it are rejected. The engine is not a general integer or congruence solver, so symbolic rank bounds remain the user's responsibility. Even when m_j=0, the corresponding U(0), adjoint, and adjacent bifundamentals are generated. The original FI shift and singlet formula are unchanged. At N=1, all p−1 new nodes are U(0). Legacy short/empty tails and their stored inverse p records remain supported; import does not insert missing U(0) nodes. Deconfine simplifies the full singlet ledger but does not simplify unrelated arrows or loops. The full superpotential is not generated.</p>
 <h3>A/B-deconfine</h3><p>A-deconfine replaces adjoint R=2r by U(N)_0 ↔ U(N)_t and adds two singlets +{1+Nr}. B-deconfine replaces it by U(N−1)_(Nr) ↔ U(N)_(t−(N−1)r) and adds +{2Nr}. Both bifundamental arrows have R=r. Apply Aharony or BBP to the new node for the inverse, rather than using the separate Confine tool.</p>
 <h3>Confine · C</h3><p>Select Confine and click the U(N) root, or open Confine preview from the Inspector. The current graph is checked for internal adjoints, bifundamental pairs, ranks, and FI values. Short tails with a leading zero-rank sequence omitted are allowed. Internal FI parameters must all follow +t_j or all follow −t_j. An empty N=1 tail uses a stored p or one entered explicitly. Additional internal connections block confinement; multiple candidates require selection. p and a are inferred from matching patterns. A numerical residue mismatch or a conflict with stored symbolic assumptions blocks the operation.</p><p>Confine removes the tail, adds an R=2/(p+1) adjoint at the root, and shifts the root FI by σ·((N−1) mod p)/(p+1). The common +t_j pattern gives σ=+1; the −t_j pattern gives σ=−1. Singlet contributions are independent of this sign: +{2−2j/(p+1)}, j=1,…,min(a,p−a), are added and canceled against the current ledger. No historical deconfinement or singlet provenance is needed. Other root loops and external connections are retained. Arrow auto-cancellation is not run here; use R cancel as needed. Cancel leaves the original unchanged, and one Undo restores the tail, FI, and singlets.</p>
-<h3>Rank-reducing · R</h3><p>Select Rank-reducing or press R, then click the U(N) to remove. Its preview is also available in the Inspector. The selected node must have one adjoint (R=2d) and one opposite-arrow pair with common R=r to exactly one U(M); both CS levels must be zero. After verifying t=σM(1−r), σ=±1, including constraints, the node and its three fields are removed and the neighboring FI receives σN(1−r). N is the rank of the removed node. The FI branch is recorded in the preview and History. The neighbor's rank and other connections are retained; no mesons are created.</p><p>The operation adds 2N singlets +{2dj} for j=−N+1,…,N, including +{0} at j=0. R=1 entries and pairs summing to 2 cancel across the full ledger, independently of the arrow setting. N must be a definite positive integer; a constraint such as N=3 is accepted. M, d, and r may be symbolic. The existing and new singlets together may not exceed 2400, and N may not exceed 1200. The original is unchanged before confirmation or on failure. Undo/Redo, JSON/SVG, and History are supported.</p>
-<h3>Limits and history</h3><p>Maximum: 160 nodes, 1200 arrows, 2400 singlets, 400 mesons per mutation, and 512 terms per expression. Theory Undo stores up to 100 actions; layout Undo stores up to 80. The latest 80 transformation records and 120 activity records are saved in JSON. The live session's undo stacks are not saved in JSON.</p>
+<h3>Rank-reducing · R</h3><p>Select Rank-reducing or press R, then click the U(N) to remove. One adjoint of R=2d and exactly one equal-R bifundamental pair to each of one or more U(F_i) gauge neighbors are required. Write S=Σ_i F_i(1-r_i). A common sign σ=±1 must satisfy t=σS. The operation removes the selected node and its incident fields, and shifts every neighboring FI-parameter by σN(1-r_i). N is the removed rank, not F_i. No mesons or new edges are generated; neighboring loops and external connections remain unchanged.</p><p>Generate +{2dj}, j=1-N,…,N once (2N entries in total), regardless of the neighbor count. Cancel these against the current ledger, including R=1 self-cancellation. N must be a definite positive integer; symbolic N is accepted only when constraints fix its value. Neighbor ranks remain positive, all involved CS levels must vanish, and direct flavor links or multiple pairs to the same neighbor are not covered. For S=t=0 the preview asks for a sign unless every individual shift is zero. Negative numerical t does not by itself select the negative branch. Undo/Redo and JSON record all shifts together; old single-neighbor records remain readable.</p><h3>Limits and history</h3><p>Maximum: 160 nodes, 1200 arrows, 2400 singlets, 400 mesons per mutation, and 512 terms per expression. Theory Undo stores up to 100 actions; layout Undo stores up to 80. The latest 80 transformation records and 120 activity records are saved in JSON. The live session's undo stacks are not saved in JSON.</p>
 <div class="shortcutbar">V Select · G Gauge · F Flavor · A Arrow · B Bi-fund · L Loop · M Aharony · P BBP · D Deconfine · C Confine · R Rank-reducing · 0 Fit all · Delete Remove · Esc Select mode · ⌘/Ctrl+S Save JSON</div><div class="dialogactions"><button id="closeHelpBottom" class="primary">Close help</button></div></div></section></div>`;$('closeHelp').onclick=closeModal;$('closeHelpBottom').onclick=closeModal;$('modalRoot').querySelector('.modal-overlay').onclick=e=>{if(e.target.classList.contains('modal-overlay'))closeModal();};$('closeHelp').focus();}
 document.querySelectorAll('.tool[data-mode]').forEach(b=>b.onclick=()=>setMode(b.dataset.mode));document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;renderPanel();});
 $('projectTitle').onchange=()=>{let title=$('projectTitle').value.trim()||'Untitled quiver';commit("Edit quiver title",s=>{s.title=title;},{notify:false});};
